@@ -1,4 +1,4 @@
-function [u] = sol_Laplace_Equation_Axb(f, dom2Inp, param)
+function [u] = team_MLR(f, dom2Inp, param)
 %this code is not intended to be efficient. 
 
 [ni, nj]=size(f);
@@ -18,6 +18,7 @@ nPixels =(ni+2)*(nj+2); %Number of pixels
 %idx_Aj: Vector for the nonZero j index of matrix A
 %a_ij: Vector for the value at position ij of matrix A
 
+
 b = zeros(nPixels,1);
 
 %Vector counter
@@ -28,17 +29,18 @@ i=1;
 for j=1:nj+2
     %from image matrix (i,j) coordinates to vectorial (p) coordinate
     p = (j-1)*(ni+2)+i;
-       
+    
+    
     %Fill Idx_Ai, idx_Aj and a_ij with the corresponding values and
     %vector b
-    idx_Ai(idx) = p; 
+    idx_Ai(idx)=  p; 
     idx_Aj(idx) = p; 
-    a_ij(idx) = 1;
+    a_ij(idx) =   1;
     idx=idx+1;
     
     idx_Ai(idx) = p;
     idx_Aj(idx) = p+1;
-    a_ij(idx) = -1;   
+    a_ij(idx) =  -1;   
     idx=idx+1;
             
     b(p) = 0;
@@ -53,7 +55,7 @@ for j=1:nj+2
     %Fill Idx_Ai, idx_Aj and a_ij with the corresponding values and
     %vector b
     %TO COMPLETE 2
-    idx_Ai(idx) = p; 
+    idx_Ai(idx)=p; 
     idx_Aj(idx) = p; 
     a_ij(idx) = 1;
     idx=idx+1;
@@ -63,7 +65,8 @@ for j=1:nj+2
     a_ij(idx) = -1;   
     idx=idx+1;
             
-    b(p) = 0;    
+    b(p) = 0;
+    
 end
 
 %West side boundary conditions
@@ -77,16 +80,17 @@ for i=1:ni+2
     %TO COMPLETE 3
     idx_Ai(idx) = p; 
     idx_Aj(idx) = p; 
-    a_ij(idx) = 1;
+    a_ij(idx)   = 1;
     idx=idx+1;
     
     idx_Ai(idx) = p;
     idx_Aj(idx) = p + (ni + 2);
-    a_ij(idx) = -1;   
+    a_ij(idx)   =-1;   
     idx=idx+1;
             
     b(p) = 0;
-       
+    
+    
 end
 
 %East side boundary conditions
@@ -100,12 +104,12 @@ for i=1:ni+2
     %TO COMPLETE 4
     idx_Ai(idx) = p; 
     idx_Aj(idx) = p; 
-    a_ij(idx) = 1;
+    a_ij(idx)   = 1;
     idx=idx+1;
     
     idx_Ai(idx) = p;
     idx_Aj(idx) = p-(ni + 2);
-    a_ij(idx) = -1;   
+    a_ij(idx)   =-1;   
     idx=idx+1;
             
     b(p) = 0;
@@ -126,27 +130,27 @@ for j=2:nj+1
             %TO COMPLETE 5
             idx_Ai(idx) = p; 
             idx_Aj(idx) = p; 
-            a_ij(idx) = 4;
+            a_ij(idx)   = 4;
             idx=idx+1;
             
             idx_Ai(idx) = p;
             idx_Aj(idx) = p+1;
-            a_ij(idx) = -1;   
+            a_ij(idx)   =-1;   
             idx=idx+1;
 
             idx_Ai(idx) = p;
             idx_Aj(idx) = p-1;
-            a_ij(idx) = -1;   
+            a_ij(idx)   =-1;   
             idx=idx+1;
 
             idx_Ai(idx) = p;
-            idx_Aj(idx) = p+(ni+2);
-            a_ij(idx) = -1;   
+            idx_Aj(idx) = p +(ni + 2);
+            a_ij(idx)   = -1;   
             idx=idx+1;
 
             idx_Ai(idx) = p;
-            idx_Aj(idx) = p-(ni+2);
-            a_ij(idx) = -1;   
+            idx_Aj(idx) = p -(ni + 2);
+            a_ij(idx)   =-1;   
             idx=idx+1;
                     
             b(p) = 0;
@@ -158,7 +162,7 @@ for j=2:nj+1
             %TO COMPLETE 6
             idx_Ai(idx) = p; 
             idx_Aj(idx) = p; 
-            a_ij(idx) = 1;
+            a_ij(idx)   = 1;
             idx=idx+1;
                     
             b(p) = f_ext(i,j);
@@ -169,7 +173,9 @@ end
     %A is a sparse matrix, so for memory requirements we create a sparse
     %matrix
     %TO COMPLETE 7
-    A=sparse(idx_Ai, idx_Aj, a_ij, ((ni+2)*(nj+2)), ((ni+2)*(nj+2))); %??? and ???? is the size of matrix A    %Solve the sistem of equations
+    A=sparse(idx_Ai, idx_Aj, a_ij, (ni + 2)*(nj + 2), (ni + 2)*(nj + 2)); %??? and ???? is the size of matrix A
+    
+    %Solve the sistem of equations
     x=mldivide(A,b);
     
     %From vector to matrix
@@ -177,3 +183,5 @@ end
     
     %Eliminate the ghost boundaries
     u=full(u_ext(2:end-1, 2:end-1));
+    
+    

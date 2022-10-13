@@ -38,9 +38,9 @@ title('Before')
 
 saveas(img_before,'./images/examples/desert_before.png');
 
-Iinp(:,:,1)=sol_Laplace_Equation_Axb(I_ch1, mask, param);
-Iinp(:,:,2)=sol_Laplace_Equation_Axb(I_ch2, mask, param);
-Iinp(:,:,3)=sol_Laplace_Equation_Axb(I_ch3, mask, param);
+Iinp(:,:,1)=team_MLR(I_ch1, mask, param);
+Iinp(:,:,2)=team_MLR(I_ch2, mask, param);
+Iinp(:,:,3)=team_MLR(I_ch3, mask, param);
     
 img_after = figure(2);
 imshow(Iinp)
