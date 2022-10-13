@@ -1,14 +1,10 @@
-%Example script: You should replace the beginning of each function ('sol')
-%with the name of your group. i.e. if your gropu name is 'G8' you should
-%call :
-% G8_DualTV_Inpainting_GD(I, mask, paramInp, paramROF)
-
 clearvars;
 
+% Change name to image you want to inpaint
 name= './images/tests/image2';
 
+% set I to the original image (with holes)
 I = double(imread([ name '_toRestore.jpg']));
-
 
 %Number of pixels for each dimension, and number of channles
 [ni, nj, nC] = size(I);
@@ -42,7 +38,6 @@ param.tol = 10^-5;
 param.hi = 1 / (ni-1);
 param.hj = 1 / (nj-1);
 
-
 figure(1)
 imshow(I);
 title('Before')
@@ -53,10 +48,12 @@ imshow(Iinp)
 title('After');
 
 %% Challenge image. (We have lost 99% of information)
-clearvars
+clearvars;
 
+% Change name to image you want to inpaint
 name= './images/tests/image5';
 
+% set I to the original image (with holes)
 I = double(imread([ name '_toRestore.jpg']));
 
 %Normalize values into [0,1]
@@ -130,3 +127,55 @@ Iinp(:,:,3)=team_MLR(I_ch3, mask, param);
 figure(2)
 imshow(Iinp)
 title('After');
+
+%% Example images
+clearvars;
+
+%Read the image
+I = double(imread('./images/examples/desert_toRestore.png'));
+
+[ni, nj, nC] = size(I);
+
+
+I = I - min(I(:));
+I = I / max(I(:));
+
+%We want to inpaint those areas in which mask == 1 (red part of the image)
+I_ch1 = I(:,:,1);
+I_ch2 = I(:,:,2);
+I_ch3 = I(:,:,3);
+
+mask_img = double(imread('./images/examples/desert_mask.png'));
+mask = mask_img > 128;
+%TO COMPLETE 1
+ %mask_img(i,j) == 1 means we have lost information in that pixel
+                                      %mask(i,j) == 0 means we have information in that pixel
+
+%%%Parameters for gradient descent (you do not need for week1)
+%param.dt = 5*10^-7;
+%param.iterMax = 10^4;
+%param.tol = 10^-5;
+
+%parameters
+param.hi = 1 / (ni-1);
+param.hj = 1 / (nj-1);
+
+% for each channel 
+
+img_before = figure(1);
+imshow(I);
+title('Before')
+
+saveas(img_before,'./images/examples/desert_before.png');
+
+Iinp(:,:,1)=team_MLR(I_ch1, mask, param);
+Iinp(:,:,2)=team_MLR(I_ch2, mask, param);
+Iinp(:,:,3)=team_MLR(I_ch3, mask, param);
+    
+img_after = figure(2);
+imshow(Iinp)
+title('After');
+
+saveas(img_after,'./images/examples/desert_after.png');
+
+return;
