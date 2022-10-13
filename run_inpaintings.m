@@ -1,7 +1,7 @@
 clearvars;
 
 % Change name to image you want to inpaint
-img_name = 'image2';
+img_name = 'image1';
 path_name= append('./images/tests/',img_name);
 
 % set I to the original image (with holes)
