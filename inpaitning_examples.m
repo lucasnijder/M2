@@ -2,7 +2,7 @@
 clearvars;
 
 %Read the image
-I = double(imread('desert_toRestore.png'));
+I = double(imread('./images/examples/desert_toRestore.png'));
 
 [ni, nj, nC] = size(I);
 
@@ -15,8 +15,7 @@ I_ch1 = I(:,:,1);
 I_ch2 = I(:,:,2);
 I_ch3 = I(:,:,3);
 
-
-mask_img = double(imread('desert_mask.png'));
+mask_img = double(imread('./images/examples/desert_mask.png'));
 mask = mask_img > 128;
 %TO COMPLETE 1
  %mask_img(i,j) == 1 means we have lost information in that pixel
@@ -37,7 +36,7 @@ img_before = figure(1);
 imshow(I);
 title('Before')
 
-saveas(img_before,'desert_before.png');
+saveas(img_before,'./images/examples/desert_before.png');
 
 Iinp(:,:,1)=sol_Laplace_Equation_Axb(I_ch1, mask, param);
 Iinp(:,:,2)=sol_Laplace_Equation_Axb(I_ch2, mask, param);
@@ -47,6 +46,6 @@ img_after = figure(2);
 imshow(Iinp)
 title('After');
 
-saveas(img_after,'desert_after.png');
+saveas(img_after,'./images/examples/desert_after.png');
 
 return;
