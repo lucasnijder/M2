@@ -156,7 +156,7 @@ saveas(img_after, image_after_save_name);
 clearvars;
 
 % select the image, choose from: night, social, desert
-img_name = 'night';
+img_name = 'arc';
 path_name= append('./images/examples/',img_name);
 
 %Read the image
