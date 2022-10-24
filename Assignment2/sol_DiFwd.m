@@ -7,7 +7,7 @@ function [ result ] = DiFwd( I, hi )
     end;
 
     result = I;
-    %Begin To Complete 8
-    result(1:end-1, :) = (I(2:end, :)-I(1:end-1, :))./hi; %result(1:end-1, :)=??
+    %Begin To Complete 8  
+    result(1:end-1, :) = (I(1:end-1, :)-I(2:end, :))./hi;
     %End To Complete 8
 end
