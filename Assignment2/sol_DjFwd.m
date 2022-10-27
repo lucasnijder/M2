@@ -9,7 +9,9 @@ function [ result ] = DjFwd( I, hj )
  
     result = I;
     %Begin To Complete 9
-    result(:, 1:end-1) = (I(:, 2:end)-I(:, 1:end-1))./hj; %result(:, 1:end-1)=??
+    result(:, 1:end-1) = (I(:, 1:end-1)-I(:, 2:end))./hj; %result(:, 1:end-1)=??
     %End To Complete 9
+
+    
 
 end
